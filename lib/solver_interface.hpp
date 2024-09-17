@@ -1,9 +1,10 @@
 #pragma once
 
 #include <functional>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <memory>
+#include <vector>
 
 #include <boost/numeric/ublas/vector.hpp>
 
@@ -12,9 +13,11 @@ namespace odes {
 namespace ublas = boost::numeric::ublas;
 
 using real_t    = double;
-using integer_t = int;
+using integer_t = size_t;
 using vector_t  = ublas::vector<real_t>;
-using ode_t     = std::function<vector_t(real_t, vector_t)>;
+template <typename T>
+using array_t = std::vector<T>;
+using ode_t   = std::function<vector_t(real_t, vector_t)>;
 
 inline std::ostream& operator<<(std::ostream& stream, const vector_t& vector)
 {
@@ -47,7 +50,8 @@ inline void solve(std::unique_ptr<isolver> solver)
 {
     while (solver->current_time() < solver->end_time()) {
         solver->step();
-        std::cout << std::setw(12) << std::fixed << std::setprecision(9) << solver->current_time() << solver->current() << std::endl;
+        std::cout << std::setw(12) << std::fixed << std::setprecision(9) << solver->current_time() << solver->current()
+                  << std::endl;
     }
 }
 
