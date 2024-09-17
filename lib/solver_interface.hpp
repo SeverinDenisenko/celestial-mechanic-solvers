@@ -29,6 +29,7 @@ struct ode_params_t {
     real_t t0;
     real_t t1;
     real_t dt;
+    vector_t x0;
     ode_t ode;
 };
 
