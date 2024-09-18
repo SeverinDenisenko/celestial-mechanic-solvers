@@ -1,5 +1,5 @@
-# adams-celestial-mechanic
- Adams solver for celestial mechanic applications
+# Celestial Mechanic Solvers
+ Implementation of some ODE solvers for celestial mechanic.
 
 ## What is it?
 
