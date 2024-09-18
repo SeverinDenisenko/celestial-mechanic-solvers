@@ -1,6 +1,7 @@
 #include "adams.hpp"
 
 #include <cmath>
+#include <iostream>
 
 #include "quad_integrator.hpp"
 #include "rk.hpp"
@@ -22,8 +23,9 @@ void adams_solver::compute_initial_values()
     rk4_solver solver(ode_params_, rk4_solver_params);
     for (size_t i = 0; i < adams_solver_params_.order; ++i) {
         solver.step();
-        initial_.push_back(solver.current());
+        initial_.push_back(ode_params_.ode(solver.current_time(), solver.current()));
     }
+
     x_ = solver.current();
     t_ = solver.current_time();
 }
@@ -34,7 +36,7 @@ void adams_solver::compute_polinomial()
     quad_integrator integrator { quad_integrator_params };
 
     for (size_t j = 0; j < adams_solver_params_.order; ++j) {
-        function_t integrand = [this, &j](real_t z) -> real_t {
+        function_t integrand = [this, j](real_t z) -> real_t {
             real_t res = 1;
 
             for (size_t i = 0; i < adams_solver_params_.order; ++i) {
@@ -73,11 +75,8 @@ void adams_solver::step() noexcept
     }
     t_ += ode_params_.dt;
 
-    // Shift the vector of intials
-    for (size_t i = 0; i < adams_solver_params_.order - 1; ++i) {
-        initial_[i] = std::move(initial_[i + 1]);
-    }
-    initial_[adams_solver_params_.order - 1] = ode_params_.ode(t_, x_);
+    std::shift_left(initial_.begin(), initial_.end(), 1);
+    initial_.back() = ode_params_.ode(t_, x_);
 }
 
 const vector_t& adams_solver::current() const noexcept

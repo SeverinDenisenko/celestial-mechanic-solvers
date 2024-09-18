@@ -6,7 +6,7 @@
 
 int main()
 {
-    size_t digits = 100;
+    size_t digits = 50;
     mpfr::mpreal::set_default_prec(mpfr::digits2bits(digits));
 
     odes::ode_t ode = [](odes::real_t t, odes::vector_t x) -> odes::vector_t {
@@ -22,7 +22,7 @@ int main()
         return y;
     };
 
-    odes::adams_solver_params_t adams_solver_params { .order = 1 };
+    odes::adams_solver_params_t adams_solver_params { .order = 3 };
     odes::rk4_solver_params_t rk_solver_params {};
 
     odes::vector_t x0(4);

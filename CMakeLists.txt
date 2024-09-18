@@ -19,5 +19,7 @@ target_link_options(AdamsSolverLib PUBLIC -fsanitize=address)
 
 set(ADAMS_SOLVER_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 add_executable(AdamsSolver ${ADAMS_SOLVER_SRC})
+target_compile_options(AdamsSolver PRIVATE -Wall -Wextra -fsanitize=address)
+target_link_options(AdamsSolver PUBLIC -fsanitize=address)
 
 target_link_libraries(AdamsSolver AdamsSolverLib)
