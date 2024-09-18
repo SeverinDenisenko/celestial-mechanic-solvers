@@ -14,12 +14,12 @@ set(ADAMS_SOLVER_LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams.cpp
 add_library(AdamsSolverLib STATIC ${ADAMS_SOLVER_LIB_SRC})
 target_include_directories(AdamsSolverLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/ ${CMAKE_CURRENT_SOURCE_DIR}/deps/ ${Boost_INCLUDE_DIR})
 target_link_libraries(AdamsSolverLib PUBLIC ${MPFR_LIBRARIES} ${Boost_LIBRARIES})
-target_compile_options(AdamsSolverLib PRIVATE -Wall -Wextra -Wpedantic -Wfloat-conversion -Werror -Wno-unused-private-field -Wno-deprecated-declarations -Wno-deprecated-copy-with-user-provided-copy -fsanitize=address)
-target_link_options(AdamsSolverLib PUBLIC -fsanitize=address)
+target_compile_options(AdamsSolverLib PRIVATE -Wall -Wextra -Wpedantic -Wfloat-conversion -Werror -Wno-unused-private-field -Wno-deprecated-declarations -Wno-deprecated-copy-with-user-provided-copy -O3)
+target_link_options(AdamsSolverLib PUBLIC)
 
 set(ADAMS_SOLVER_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 add_executable(AdamsSolver ${ADAMS_SOLVER_SRC})
-target_compile_options(AdamsSolver PRIVATE -Wall -Wextra -fsanitize=address)
-target_link_options(AdamsSolver PUBLIC -fsanitize=address)
+target_compile_options(AdamsSolver PRIVATE -Wall -Wextra  -O3)
+target_link_options(AdamsSolver PUBLIC)
 
 target_link_libraries(AdamsSolver AdamsSolverLib)
