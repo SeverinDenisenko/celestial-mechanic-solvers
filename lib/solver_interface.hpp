@@ -1,25 +1,20 @@
 #pragma once
 
-#include <functional>
-#include <iomanip>
-#include <iostream>
-#include <memory>
-#include <vector>
-
-#include <boost/numeric/ublas/vector.hpp>
+#include "types.hpp"
 
 namespace odes {
 
-namespace ublas = boost::numeric::ublas;
-
-using real_t    = double;
-using integer_t = size_t;
-using vector_t  = ublas::vector<real_t>;
-template <typename T>
-using array_t = std::vector<T>;
-using ode_t   = std::function<vector_t(real_t, vector_t)>;
-
 inline std::ostream& operator<<(std::ostream& stream, const vector_t& vector)
+{
+    for (size_t i = 0; i < vector.size(); ++i) {
+        stream << " " << vector[i];
+    }
+
+    return stream;
+}
+
+template <typename T>
+inline std::ostream& operator<<(std::ostream& stream, const array_t<T>& vector)
 {
     for (size_t i = 0; i < vector.size(); ++i) {
         stream << " " << vector[i];
@@ -46,8 +41,11 @@ public:
     virtual ~isolver()                                  = default;
 };
 
-inline void solve(std::unique_ptr<isolver> solver)
+inline void solve(std::unique_ptr<isolver> solver, array_t<string_t> names)
 {
+    std::cout << names << std::endl;
+    std::cout << std::setw(12) << std::fixed << std::setprecision(9) << solver->current_time() << solver->current()
+              << std::endl;
     while (solver->current_time() < solver->end_time()) {
         solver->step();
         std::cout << std::setw(12) << std::fixed << std::setprecision(9) << solver->current_time() << solver->current()

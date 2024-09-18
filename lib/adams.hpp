@@ -19,8 +19,9 @@ public:
     const real_t& end_time() const noexcept override final;
 
 private:
-    real_t integrate(std::function<real_t(size_t, real_t)> integrand, size_t j);
     size_t factorial(size_t x);
+    void compute_initial_values();
+    void compute_polinomial();
 
     ode_params_t ode_params_;
     adams_solver_params_t adams_solver_params_;

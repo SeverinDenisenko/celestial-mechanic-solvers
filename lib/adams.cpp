@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "quad_integrator.hpp"
 #include "rk.hpp"
 
 namespace odes {
@@ -11,7 +12,12 @@ adams_solver::adams_solver(ode_params_t ode_params, adams_solver_params_t adams_
     , adams_solver_params_(adams_solver_params)
     , x_(ode_params.x0)
 {
-    // Compute initial values
+    compute_initial_values();
+    compute_polinomial();
+}
+
+void adams_solver::compute_initial_values()
+{
     rk4_solver_params_t rk4_solver_params {};
     rk4_solver solver(ode_params_, rk4_solver_params);
     for (size_t i = 0; i < adams_solver_params_.order; ++i) {
@@ -20,38 +26,33 @@ adams_solver::adams_solver(ode_params_t ode_params, adams_solver_params_t adams_
     }
     x_ = solver.current();
     t_ = solver.current_time();
-
-    // Compute polinomial
-    std::function<real_t(size_t, real_t)> integrand = [this](size_t j, real_t z) -> real_t {
-        real_t res = 1;
-
-        for (size_t i = 0; i < adams_solver_params_.order; ++i) {
-            if (i == j) {
-                continue;
-            }
-            res *= z + i;
-        }
-
-        return res;
-    };
-
-    for (size_t j = 0; j < adams_solver_params_.order; ++j) {
-        real_t a = pow(-1.0, j) / (factorial(j) * factorial(adams_solver_params_.order - 1 - j));
-        a *= integrate(integrand, j);
-        a_.push_back(a);
-    }
 }
 
-real_t adams_solver::integrate(std::function<real_t(size_t, real_t)> integrand, size_t j)
+void adams_solver::compute_polinomial()
 {
-    size_t order = 100'000;
-    real_t res   = 0;
+    quad_integrator_params_t quad_integrator_params { .order = 100'000 };
+    quad_integrator integrator { quad_integrator_params };
 
-    for (size_t i = 0; i < order; ++i) {
-        res += integrand(j, (real_t)(i + 1) / order) / order;
+    for (size_t j = 0; j < adams_solver_params_.order; ++j) {
+        function_t integrand = [this, &j](real_t z) -> real_t {
+            real_t res = 1;
+
+            for (size_t i = 0; i < adams_solver_params_.order; ++i) {
+                if (i == j) {
+                    continue;
+                }
+                res *= z + real_t(i);
+            }
+
+            return res;
+        };
+
+        real_t a;
+        a = integrator.integrate(integrand, real_t(0), real_t(1));
+        a /= real_t(factorial(j) * factorial(adams_solver_params_.order - 1 - j));
+        a *= j % 2 == 0 ? real_t(1.0) : real_t(-1.0);
+        a_.push_back(a);
     }
-
-    return res;
 }
 
 size_t adams_solver::factorial(size_t x)
