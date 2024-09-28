@@ -1,10 +1,10 @@
-#include "adams.hpp"
+#include "adams_extrapolation_solver.hpp"
 
 #include <cmath>
 #include <iostream>
 
 #include "quad_integrator.hpp"
-#include "rk.hpp"
+#include "rk4_solver.hpp"
 #include "types.hpp"
 
 namespace odes {

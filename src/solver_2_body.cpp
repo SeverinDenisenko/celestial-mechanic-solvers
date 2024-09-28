@@ -1,7 +1,7 @@
-#include "adams.hpp"
+#include "adams_extrapolation_solver.hpp"
 #include "integrator_interface.hpp"
 #include "simpson_integrator.hpp"
-#include "rk.hpp"
+#include "rk4_solver.hpp"
 #include "solver_interface.hpp"
 #include "types.hpp"
 
