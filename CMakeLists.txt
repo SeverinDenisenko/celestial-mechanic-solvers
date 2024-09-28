@@ -24,5 +24,10 @@ set(SOLVER_2_BODY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/solver_2_body.cpp)
 add_executable(Solver2Body ${SOLVER_2_BODY_SRC})
 target_compile_options(Solver2Body PRIVATE -Wall -Wextra  -O3)
 target_link_options(Solver2Body PUBLIC)
-
 target_link_libraries(Solver2Body ODESolversLib)
+
+set(SOLVER_N_BODY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/solver_n_body.cpp)
+add_executable(SolverNBody ${SOLVER_N_BODY_SRC})
+target_compile_options(SolverNBody PRIVATE -Wall -Wextra  -O3)
+target_link_options(SolverNBody PUBLIC)
+target_link_libraries(SolverNBody ODESolversLib)
