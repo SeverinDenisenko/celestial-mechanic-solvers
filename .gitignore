@@ -31,4 +31,11 @@
 *.out
 *.app
 
+# CMake
 build/
+
+# Clangd
+.cache/
+
+# MacOS
+.DS_Store
