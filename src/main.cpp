@@ -1,6 +1,6 @@
 #include "adams.hpp"
 #include "integrator_interface.hpp"
-#include "quad_integrator.hpp"
+#include "simpson_integrator.hpp"
 #include "rk.hpp"
 #include "solver_interface.hpp"
 #include "types.hpp"
@@ -34,8 +34,8 @@ int main()
     };
 
     odes::integer_t order = 4;
-    odes::quad_integrator_params_t integrator_params { .order = 1'000'000 };
-    odes::uptr<odes::iintegrator> integrator = std::make_unique<odes::quad_integrator>(integrator_params);
+    odes::simpson_integrator_params_t integrator_params { .order = 10'000'000 };
+    odes::uptr<odes::iintegrator> integrator = std::make_unique<odes::simpson_integrator>(integrator_params);
 
     odes::adams_extrapolation_coefficients_params_t coefficients_params { .order      = order,
                                                                           .integrator = std::move(integrator) };

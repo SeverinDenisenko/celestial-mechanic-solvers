@@ -11,7 +11,8 @@ find_package(MPFR REQUIRED)
 
 set(ADAMS_SOLVER_LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/rk.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/lib/quad_integrator.cpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/quad_integrator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/simpson_integrator.cpp)
 
 add_library(AdamsSolverLib STATIC ${ADAMS_SOLVER_LIB_SRC})
 target_include_directories(AdamsSolverLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/ ${CMAKE_CURRENT_SOURCE_DIR}/deps/ ${Boost_INCLUDE_DIR})
