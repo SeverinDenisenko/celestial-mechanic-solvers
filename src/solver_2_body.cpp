@@ -1,7 +1,7 @@
 #include "adams_extrapolation_solver.hpp"
 #include "integrator_interface.hpp"
-#include "simpson_integrator.hpp"
 #include "rk4_solver.hpp"
+#include "simpson_integrator.hpp"
 #include "solver_interface.hpp"
 #include "types.hpp"
 
@@ -53,7 +53,7 @@ int main()
     odes::real_t v = sqrt(x0[2] * x0[2] + x0[3] * x0[3]);
     odes::real_t t = calc_orbital_period(r, v);
 
-    odes::ode_params_t ode_params { .t0 = 0.0, .t1 = t, .dt = 0.0000001, .x0 = x0, .ode = ode };
+    odes::ode_params_t ode_params { .t0 = 0.0, .t1 = t, .dt = 0.000001, .x0 = x0, .ode = ode };
 
     std::unique_ptr<odes::isolver> solver
         = std::make_unique<odes::adams_extrapolation_solver>(ode_params, std::move(solver_params));

@@ -15,7 +15,7 @@ namespace odes {
 
 namespace ublas = boost::numeric::ublas;
 
-using real_t    = long double;
+using real_t    = mpfr::mpreal;
 using integer_t = size_t;
 using vector_t  = ublas::vector<real_t>;
 template <typename T>
