@@ -248,7 +248,7 @@ x0[3] = 0.5;
   \end{table}
 \end{frame}
 
-\begin{frame}{Fourth order}
+\begin{frame}{Fourth order (long double)}
   \begin{table}
     \caption{Fourth order method precision}
     \begin{tabular}{lr}
@@ -261,6 +261,26 @@ x0[3] = 0.5;
       0.0001 & 0.99999999982612\\
       0.00001 & 0.99999999996357\\
       0.000001 & 0.99999999999983\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Fourth order (mpfr)}
+  \begin{table}
+    \caption{Fourth order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.1 & 0.88204993803128\\
+      0.01 & 0.97785892721521\\
+      0.001 & 0.99999932554845\\
+      0.0001 & 0.99999999981791\\
+      0.00001 & 0.99999999995995\\
+      0.000001 & 1.00000000000000\\
       \midrule
       exact & 1.0 \\
       \bottomrule
