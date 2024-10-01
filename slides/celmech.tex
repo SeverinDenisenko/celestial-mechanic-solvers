@@ -65,6 +65,36 @@
   The easiest way to calculate this integral is numerical.
 \end{frame}
 
+\begin{frame}{Order of approximation}
+  The Adams extrapolation method of order $k$ have order of approximation $p = k$ (local errors is of order $O(h^{p+1})$).
+  
+  For 2-step Adams method:
+  \begin{equation*}
+    y_{n+2} = y_{n+1} + h((1-\lambda) f_{n+1} + \lambda f_n)
+  \end{equation*}
+  \begin{equation*}
+    y_{n+2} = y(t_{n+1}) + h((1-\lambda)y'(t_{n+1})+\lambda y'(t_n))
+  \end{equation*}
+\end{frame}
+
+\begin{frame}{Order of approximation}
+  Using Taylor's theorem expand $y'(t_n)$ at $t_{n+1}$:
+  \begin{equation*}
+      y_{n+2} = y(t_{n+1}) + h((1-\lambda)y'(t_{n+1})+ \lambda (y'(t_{n+1}) - h y''(t_{n+1}) + O(h^2)))
+  \end{equation*}
+  \begin{equation*}
+      y_{n+2} = y(t_{n+1}) + h y'(t_{n+1}) - \lambda h^2 y''(t_{n+1}) + O(h^3)
+  \end{equation*}
+  Since $\lambda = - 1/2$:
+  \begin{equation*}
+      y_{n+2} = y(t_{n+1}) + h y'(t_{n+1}) + \frac{1}{2} h^2 y''(t_{n+1}) + O(h^3)
+  \end{equation*}
+  End finaly:
+  \begin{equation*}
+    y(t_{n+2}) - y_{n+2} = O(h^3)
+  \end{equation*}
+\end{frame}
+
 \section{Implementation}
 
 \begin{frame}[fragile]{List of used software}
