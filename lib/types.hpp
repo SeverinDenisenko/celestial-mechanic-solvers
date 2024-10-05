@@ -44,6 +44,11 @@ inline matrix_t operator*(matrix_t m1, matrix_t m2)
     return boost::numeric::ublas::prod(m1, m2);
 }
 
+inline real_t norm(vector_t v)
+{
+    return boost::numeric::ublas::norm_2(v);
+}
+
 template <typename T>
 using uptr = std::unique_ptr<T>;
 

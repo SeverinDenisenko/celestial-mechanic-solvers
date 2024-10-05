@@ -19,7 +19,7 @@ vector_t newton_root_finder::solve(multi_function_t func, vector_t initial)
 
         result = params_.matrix_solver->solve(m, b);
 
-        if (boost::numeric::ublas::norm_2(tmp - result) < params_.precision) {
+        if (norm(tmp - result) < params_.precision) {
             break;
         }
         std::swap(result, tmp);
