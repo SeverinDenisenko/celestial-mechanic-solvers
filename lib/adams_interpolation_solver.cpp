@@ -57,7 +57,7 @@ adams_interpolation_solver::adams_interpolation_solver(
         }
 
         res *= ode_params_.dt;
-        res = x_ - y;
+        res += x_ - y;
 
         return res;
     };

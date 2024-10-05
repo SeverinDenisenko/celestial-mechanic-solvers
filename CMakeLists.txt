@@ -19,15 +19,17 @@ set(ODE_SOLVER_LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_extrapolation_solve
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/simpson_integrator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/utils.cpp)
 
+add_compile_definitions("-DSNUMLIB_USE_MPFR=0")
+
 add_library(ODESolversLib STATIC ${ODE_SOLVER_LIB_SRC})
 target_include_directories(ODESolversLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/ ${CMAKE_CURRENT_SOURCE_DIR}/deps/ ${Boost_INCLUDE_DIR})
 target_link_libraries(ODESolversLib PUBLIC ${MPFR_LIBRARIES} ${Boost_LIBRARIES})
-target_compile_options(ODESolversLib PRIVATE -Wall -Wextra -Wpedantic -Wfloat-conversion -Werror -Wno-unused-private-field -Wno-deprecated-declarations -Wno-deprecated-copy-with-user-provided-copy -O3)
+target_compile_options(ODESolversLib PRIVATE -Wall -Wextra -Wpedantic -Wfloat-conversion -Werror -Wno-unused-private-field -Wno-deprecated-declarations -Wno-deprecated-copy-with-user-provided-copy -O0)
 target_link_options(ODESolversLib PUBLIC)
 
 set(SOLVER_2_BODY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/solver_2_body.cpp)
 add_executable(Solver2Body ${SOLVER_2_BODY_SRC})
-target_compile_options(Solver2Body PRIVATE -Wall -Wextra  -O3)
+target_compile_options(Solver2Body PRIVATE -Wall -Wextra -O0)
 target_link_options(Solver2Body PUBLIC)
 target_link_libraries(Solver2Body ODESolversLib)
 

@@ -11,7 +11,7 @@ struct simple_jacoby_mattrix_evaluator_params_t {
 class simple_jacoby_mattrix_evaluator : public ijacoby_matrix_evaluator {
 public:
     simple_jacoby_mattrix_evaluator(simple_jacoby_mattrix_evaluator_params_t params);
-    matrix_t evaluate(multi_function_t func, vector_t point);
+    matrix_t evaluate(multi_function_t func, vector_t point) override;
 
 private:
     simple_jacoby_mattrix_evaluator_params_t params_;

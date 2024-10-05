@@ -9,6 +9,7 @@
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/io.hpp>
 
 #include "mpreal/mpreal.h"
 
@@ -16,13 +17,14 @@ namespace odes {
 
 namespace ublas = boost::numeric::ublas;
 
-#ifdef SNUMLIB_USE_MPFR
+#if SNUMLIB_USE_MPFR == 1
 using real_t = mpfr::mpreal;
 #else
 using real_t = double;
 #endif
 
 using integer_t = size_t;
+using signed_integer_t = ssize_t;
 using vector_t  = ublas::vector<real_t>;
 using matrix_t  = ublas::matrix<real_t>;
 template <typename T>
