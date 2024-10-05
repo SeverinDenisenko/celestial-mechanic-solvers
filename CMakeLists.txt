@@ -10,9 +10,14 @@ find_package(Boost REQUIRED)
 find_package(MPFR REQUIRED)
 
 set(ODE_SOLVER_LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_extrapolation_solver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_interpolation_solver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/simple_jacoby_matrix_evaluator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/full_pivot_gauss_solver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/newton_root_finder.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/rk4_solver.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/quad_integrator.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/lib/simpson_integrator.cpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/simpson_integrator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/utils.cpp)
 
 add_library(ODESolversLib STATIC ${ODE_SOLVER_LIB_SRC})
 target_include_directories(ODESolversLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/ ${CMAKE_CURRENT_SOURCE_DIR}/deps/ ${Boost_INCLUDE_DIR})

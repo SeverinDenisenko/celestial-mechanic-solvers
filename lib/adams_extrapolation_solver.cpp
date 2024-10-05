@@ -6,6 +6,7 @@
 #include "quad_integrator.hpp"
 #include "rk4_solver.hpp"
 #include "types.hpp"
+#include "utils.hpp"
 
 namespace odes {
 
@@ -18,17 +19,6 @@ adams_extrapolation_coefficients::adams_extrapolation_coefficients(adams_extrapo
 const real_t& adams_extrapolation_coefficients::operator[](integer_t num) const
 {
     return a_[num];
-}
-
-integer_t adams_extrapolation_coefficients::factorial(integer_t x)
-{
-    size_t res = 1;
-
-    for (size_t i = 2; i <= x; ++i) {
-        res *= i;
-    }
-
-    return res;
 }
 
 void adams_extrapolation_coefficients::compute_polinomial()
