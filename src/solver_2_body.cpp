@@ -1,4 +1,6 @@
+#include "adams_extrapolation_solver.hpp"
 #include "adams_interpolation_solver.hpp"
+#include "adams_predictor_corrector_solver.hpp"
 #include "full_pivot_gauss_solver.hpp"
 #include "integrator_interface.hpp"
 #include "jacoby_matrix_evaluator_interface.hpp"
@@ -40,13 +42,18 @@ int main()
         return y;
     };
 
-    odes::integer_t order = 3;
-    odes::simpson_integrator_params_t integrator_params { .order = 10'000'000 };
-    odes::uptr<odes::iintegrator> integrator = std::make_unique<odes::simpson_integrator>(integrator_params);
+    odes::integer_t order = 2;
+    odes::simpson_integrator_params_t integrator_params { .order = 1'000'000 };
 
-    odes::adams_interpolation_coefficients_params_t coefficients_params { .order      = order,
-                                                                          .integrator = std::move(integrator) };
-    odes::adams_interpolation_coefficients coefficients(std::move(coefficients_params));
+    odes::adams_interpolation_coefficients_params_t interpolation_coefficients_params {
+        .order = order, .integrator = std::make_unique<odes::simpson_integrator>(integrator_params)
+    };
+    odes::adams_interpolation_coefficients interpolation_coefficients(std::move(interpolation_coefficients_params));
+
+    odes::adams_extrapolation_coefficients_params_t extrapolation_coefficients_params {
+        .order = order, .integrator = std::make_unique<odes::simpson_integrator>(integrator_params)
+    };
+    odes::adams_extrapolation_coefficients extrapolation_coefficients(std::move(extrapolation_coefficients_params));
 
     odes::jacoby_mattrix_evaluator_params_t jacoby_mattrix_evaluator_params { .step = 1e20 };
     odes::uptr<odes::ijacoby_matrix_evaluator> matrix_evaluator
@@ -61,9 +68,13 @@ int main()
     odes::uptr<odes::iroot_finder> root_finder
         = std::make_unique<odes::newton_root_finder>(std::move(newton_root_finder_params));
 
-    odes::adams_interpolation_solver_params_t solver_params { .order        = order,
-                                                              .coefficients = std::move(coefficients),
-                                                              .root_finder  = std::move(root_finder) };
+    odes::adams_interpolation_solver_params_t interpolation_solver_params {
+        .order = order, .coefficients = std::move(interpolation_coefficients), .root_finder = std::move(root_finder)
+    };
+
+    odes::adams_extrapolation_solver_params_t extrapolation_solver_params { .order = order,
+                                                                            .coefficients
+                                                                            = std::move(extrapolation_coefficients) };
 
     odes::vector_t x0(4);
     x0[0] = 1.0;
@@ -75,10 +86,10 @@ int main()
     odes::real_t v = sqrt(x0[2] * x0[2] + x0[3] * x0[3]);
     odes::real_t t = calc_orbital_period(r, v);
 
-    odes::ode_params_t ode_params { .t0 = 0.0, .t1 = t, .dt = 0.01, .x0 = x0, .ode = ode };
+    odes::ode_params_t ode_params { .t0 = 0.0, .t1 = t, .dt = 0.0001, .x0 = x0, .ode = ode };
 
-    std::unique_ptr<odes::isolver> solver
-        = std::make_unique<odes::adams_interpolation_solver>(ode_params, std::move(solver_params));
+    std::unique_ptr<odes::isolver> solver = std::make_unique<odes::adams_predictor_corrector_solver>(
+        ode_params, std::move(interpolation_solver_params), std::move(extrapolation_solver_params));
 
     odes::integer_t n             = static_cast<odes::integer_t>((ode_params.t1 - ode_params.t0) / ode_params.dt);
     odes::integer_t print_every_n = std::max(odes::integer_t(1), n / 1000);
