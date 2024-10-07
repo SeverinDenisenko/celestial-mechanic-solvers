@@ -1,0 +1,107 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usecolortheme{aggie}
+
+\usepackage{appendixnumberbeamer}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\title{Predictor-corrector solver for ODE}
+\subtitle{Using Predictor-corrector solvers for 2- and 3- body problems}
+% \date{\today}
+\date{}
+\author{Severin Denisenko}
+\institute{Saint Petersburg State University}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents%[hideallsubsections]
+\end{frame}
+
+\section[Concept]{Concept}
+
+\begin{frame}{Concept}
+    For predictor-corrector requared:
+	\begin{itemize}
+		\item First explicit method (predictor)
+		\item Second impicit method (corrector)
+		\item Predictor-corrector scheme (explaned next)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Predictor-corrector schemes}
+\begin{itemize}
+  \item Using the outcome of the explicit (predictor) method as an initial guess for the corrector (impicit) method
+  \item Using the predictor result as a beginning value in an interative substitution in impicit method
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Predictor-corrector order of approximation}
+    Interpolation Adams method has +1 order of approximation of enterpolation Adams method. Resulting precor pair will give interpolation's method approximation.
+\end{frame}
+
+\section{Interpolatin Adams method}
+
+\begin{frame}{Second order}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=\textwidth,
+        height=7cm,
+        legend style={at={(0.8,0.8)},anchor=west},
+        xmin=-0.5, xmax=1.5,
+        ymin=-0.7, ymax=0.7,
+        ]
+
+        \addplot table [y=y, x=x, mark=none]{interpdt0dot01order2.dat};
+        \addlegendentry{$dt = 0.01$}
+        \addplot table [y=y, x=x, mark=none]{interpdt0dot001order2.dat};
+        \addlegendentry{$dt = 0.001$}
+        \addplot table [y=y, x=x, mark=none]{interpdt0dot0001order2.dat};
+        \addlegendentry{$dt = 0.0001$}
+        \addplot table [y=y, x=x, mark=none]{interpdt0dot00001order2.dat};
+        \addlegendentry{$dt = 0.00001$}
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Second order}
+  \begin{table}
+    \caption{Second order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 1.01271285286200\\
+      0.001 & 1.00001246611392\\
+      0.0001 & 1.00000001277170\\
+      0.00001 & 1.00000000000627\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\appendix
+
+\begin{frame}[allowframebreaks]{References}
+  \bibliographystyle{abbrv}
+  \bibliography{celmech}
+\end{frame}
+
+\end{document}

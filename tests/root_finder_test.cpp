@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <memory>
 
 #include "full_pivot_gauss_solver.hpp"
