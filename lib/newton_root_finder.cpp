@@ -35,4 +35,9 @@ real_t newton_root_finder::get_residual()
     return residual_;
 }
 
+bool newton_root_finder::precision_was_reached()
+{
+    return residual_ < params_.precision;
+}
+
 }

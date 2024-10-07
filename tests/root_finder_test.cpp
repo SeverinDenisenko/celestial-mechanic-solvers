@@ -4,16 +4,16 @@
 #include "full_pivot_gauss_solver.hpp"
 #include "jacoby_matrix_evaluator_interface.hpp"
 #include "newton_root_finder.hpp"
-#include "simple_jacoby_matrix_evaluator.hpp"
+#include "jacoby_matrix_evaluators.hpp"
 #include "types.hpp"
 
 using namespace odes;
 
 void test(multi_function_t function, vector_t initial, vector_t expected)
 {
-    odes::simple_jacoby_mattrix_evaluator_params_t jacoby_mattrix_evaluator_params { .step = 1e-5 };
+    odes::jacoby_mattrix_evaluator_params_t jacoby_mattrix_evaluator_params { .step = 1e-5 };
     uptr<odes::ijacoby_matrix_evaluator> jacoby_matrix_evaluator
-        = std::make_unique<odes::simple_jacoby_mattrix_evaluator>(jacoby_mattrix_evaluator_params);
+        = std::make_unique<odes::fourth_order_jacoby_mattrix_evaluator>(jacoby_mattrix_evaluator_params);
     odes::newton_root_finder_params_t params { .precision       = 1e-10,
                                                .max_interations = 100,
                                                .matrix_solver   = std::make_unique<odes::full_pivot_gauss_solver>(),

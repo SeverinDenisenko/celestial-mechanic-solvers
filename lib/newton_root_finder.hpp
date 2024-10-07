@@ -19,6 +19,7 @@ public:
     newton_root_finder(newton_root_finder_params_t params);
     vector_t solve(multi_function_t func, vector_t initial) override;
     real_t get_residual() override;
+    bool precision_was_reached() override;
 
 private:
     newton_root_finder_params_t params_;
