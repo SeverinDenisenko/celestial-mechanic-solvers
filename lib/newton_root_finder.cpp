@@ -25,7 +25,14 @@ vector_t newton_root_finder::solve(multi_function_t func, vector_t initial)
         std::swap(result, tmp);
     }
 
+    residual_ = norm(tmp - result);
+
     return result;
+}
+
+real_t newton_root_finder::get_residual()
+{
+    return residual_;
 }
 
 }

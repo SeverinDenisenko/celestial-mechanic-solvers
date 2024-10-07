@@ -18,9 +18,11 @@ class newton_root_finder : public iroot_finder {
 public:
     newton_root_finder(newton_root_finder_params_t params);
     vector_t solve(multi_function_t func, vector_t initial) override;
+    real_t get_residual() override;
 
 private:
     newton_root_finder_params_t params_;
+    real_t residual_;
 };
 
 }

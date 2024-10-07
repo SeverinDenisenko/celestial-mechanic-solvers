@@ -52,7 +52,7 @@ int main()
     odes::uptr<odes::ijacoby_matrix_evaluator> matrix_evaluator
         = std::make_unique<odes::simple_jacoby_mattrix_evaluator>(jacoby_mattrix_evaluator_params);
 
-    odes::newton_root_finder_params_t newton_root_finder_params { .max_interations = 1000,
+    odes::newton_root_finder_params_t newton_root_finder_params { .max_interations = 100000,
                                                                   .precision       = 1e-10,
                                                                   .matrix_solver
                                                                   = std::make_unique<odes::full_pivot_gauss_solver>(),
@@ -75,7 +75,7 @@ int main()
     odes::real_t v = sqrt(x0[2] * x0[2] + x0[3] * x0[3]);
     odes::real_t t = calc_orbital_period(r, v);
 
-    odes::ode_params_t ode_params { .t0 = 0.0, .t1 = t, .dt = 0.01, .x0 = x0, .ode = ode };
+    odes::ode_params_t ode_params { .t0 = 0.0, .t1 = t, .dt = 0.1, .x0 = x0, .ode = ode };
 
     std::unique_ptr<odes::isolver> solver
         = std::make_unique<odes::adams_interpolation_solver>(ode_params, std::move(solver_params));

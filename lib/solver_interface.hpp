@@ -13,16 +13,6 @@ inline std::ostream& operator<<(std::ostream& stream, const vector_t& vector)
     return stream;
 }
 
-template <typename T>
-inline std::ostream& operator<<(std::ostream& stream, const array_t<T>& vector)
-{
-    for (size_t i = 0; i < vector.size(); ++i) {
-        stream << " " << vector[i];
-    }
-
-    return stream;
-}
-
 struct ode_params_t {
     real_t t0;
     real_t t1;

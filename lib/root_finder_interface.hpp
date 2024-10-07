@@ -7,6 +7,7 @@ namespace odes {
 class iroot_finder {
 public:
     virtual vector_t solve(multi_function_t func, vector_t initial) = 0;
+    virtual real_t get_residual() = 0;
     virtual ~iroot_finder() = default;
 };
 
