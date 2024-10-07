@@ -15,11 +15,9 @@
 
 \title{Predictor-corrector solver for ODE}
 \subtitle{Using Predictor-corrector solvers for 2- and 3- body problems}
-% \date{\today}
-\date{}
+\date{\today}
 \author{Severin Denisenko}
 \institute{Saint Petersburg State University}
-% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 
 \begin{document}
 
@@ -42,14 +40,18 @@
 \end{frame}
 
 \begin{frame}{Predictor-corrector schemes}
-\begin{itemize}
-  \item Using the outcome of the explicit (predictor) method as an initial guess for the corrector (impicit) method
-  \item Using the predictor result as a beginning value in an interative substitution in impicit method
-\end{itemize}
+    \begin{itemize}
+        \item Using the outcome of the explicit (predictor) method as an initial guess for the corrector (impicit) method
+        \item Using the predictor result as a beginning value in an interative substitution in impicit method
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Predictor-corrector order of approximation}
-    Interpolation Adams method has +1 order of approximation of enterpolation Adams method. Resulting precor pair will give interpolation's method approximation.
+    \begin{itemize}
+        \item Interpolation Adams method has +1 order of approximation of enterpolation Adams method
+        \item Adams interpolation and extrapolation methods can be used as a predictor-corrector pair
+        \item Resulting predictor-corrector method will give interpolation's method approximation
+    \end{itemize}
 \end{frame}
 
 \section{Interpolatin Adams method}
