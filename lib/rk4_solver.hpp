@@ -4,12 +4,11 @@
 
 namespace odes {
 
-struct rk4_solver_params_t {
-};
+struct rk4_solver_params_t { };
 
 class rk4_solver : public isolver {
 public:
-    rk4_solver(ode_params_t ode_params, rk4_solver_params_t rk4_solver_params);
+    explicit rk4_solver(ode_params_t ode_params, rk4_solver_params_t rk4_solver_params);
 
     void step() noexcept override;
     const vector_t& current() const noexcept override final;

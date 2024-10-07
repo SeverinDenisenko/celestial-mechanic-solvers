@@ -84,8 +84,12 @@ int main()
 
     odes::ode_params_t ode_params { .t0 = 0.0, .t1 = t, .dt = 0.0001, .x0 = x0, .ode = ode };
 
-    std::unique_ptr<odes::isolver> solver = std::make_unique<odes::adams_predictor_corrector_solver>(
-        ode_params, std::move(interpolation_solver_params), std::move(extrapolation_solver_params));
+    odes::adams_predictor_corrector_solver_params_t solver_params {
+        .interpolation = std::move(interpolation_solver_params), .extrapolation = std::move(extrapolation_solver_params)
+    };
+
+    std::unique_ptr<odes::isolver> solver
+        = std::make_unique<odes::adams_predictor_corrector_solver>(ode_params, std::move(solver_params));
 
     odes::integer_t n             = static_cast<odes::integer_t>((ode_params.t1 - ode_params.t0) / ode_params.dt);
     odes::integer_t print_every_n = std::max(odes::integer_t(1), n / 1000);

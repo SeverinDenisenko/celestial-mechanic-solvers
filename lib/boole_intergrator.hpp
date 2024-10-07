@@ -11,7 +11,7 @@ struct boole_integrator_params_t {
 
 class boole_integrator : public iintegrator {
 public:
-    boole_integrator(boole_integrator_params_t params);
+    explicit boole_integrator(boole_integrator_params_t params);
     real_t integrate(function_t& func, real_t a, real_t b) noexcept override;
 
 private:

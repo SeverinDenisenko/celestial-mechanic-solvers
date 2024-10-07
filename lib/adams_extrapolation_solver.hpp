@@ -13,7 +13,7 @@ struct adams_extrapolation_coefficients_params_t {
 
 class adams_extrapolation_coefficients {
 public:
-    adams_extrapolation_coefficients(adams_extrapolation_coefficients_params_t params);
+    explicit adams_extrapolation_coefficients(adams_extrapolation_coefficients_params_t params);
     const real_t& operator[](integer_t num) const;
 
 private:
@@ -30,8 +30,7 @@ struct adams_extrapolation_solver_params_t {
 
 class adams_extrapolation_solver : public isolver {
 public:
-    adams_extrapolation_solver(
-        ode_params_t ode_params, adams_extrapolation_solver_params_t params);
+    explicit adams_extrapolation_solver(ode_params_t ode_params, adams_extrapolation_solver_params_t params);
 
     void step() noexcept override;
     const vector_t& current() const noexcept override final;

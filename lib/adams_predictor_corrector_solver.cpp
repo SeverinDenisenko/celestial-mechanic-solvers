@@ -6,12 +6,9 @@
 namespace odes {
 
 adams_predictor_corrector_solver::adams_predictor_corrector_solver(
-    ode_params_t ode_params,
-    adams_interpolation_solver_params_t interpolation_params,
-    adams_extrapolation_solver_params_t extrapolation_params)
+    ode_params_t ode_params, adams_predictor_corrector_solver_params_t params)
     : ode_params_(ode_params)
-    , interpolation_params_(std::move(interpolation_params))
-    , extrapolation_params_(std::move(extrapolation_params))
+    , params_(std::move(params))
     , x_(ode_params.x0)
 {
     compute_initial_values();
@@ -19,9 +16,9 @@ adams_predictor_corrector_solver::adams_predictor_corrector_solver(
     solved_func_ = [this](vector_t y) -> vector_t {
         vector_t res;
 
-        res = interpolation_params_.coefficients[0] * ode_params_.ode(t_, y) * ode_params_.dt;
-        for (integer_t j = 0; j < interpolation_params_.order; ++j) {
-            res += interpolation_params_.coefficients[j + 1] * initial_[interpolation_params_.order - 1 - j]
+        res = params_.interpolation.coefficients[0] * ode_params_.ode(t_, y) * ode_params_.dt;
+        for (integer_t j = 0; j < params_.interpolation.order; ++j) {
+            res += params_.interpolation.coefficients[j + 1] * initial_[params_.interpolation.order - 1 - j]
                 * ode_params_.dt;
         }
 
@@ -35,7 +32,7 @@ void adams_predictor_corrector_solver::compute_initial_values()
 {
     rk4_solver_params_t rk4_solver_params {};
     rk4_solver solver(ode_params_, rk4_solver_params);
-    for (size_t i = 0; i < extrapolation_params_.order; ++i) {
+    for (size_t i = 0; i < params_.extrapolation.order; ++i) {
         solver.step();
         initial_.push_back(ode_params_.ode(solver.current_time(), solver.current()));
     }
@@ -48,17 +45,17 @@ void adams_predictor_corrector_solver::step() noexcept
 {
     // Predictor step
     vector_t x = x_;
-    for (size_t j = 0; j < extrapolation_params_.order; ++j) {
-        x += extrapolation_params_.coefficients[extrapolation_params_.order - 1 - j] * initial_[j] * ode_params_.dt;
+    for (size_t j = 0; j < params_.extrapolation.order; ++j) {
+        x += params_.extrapolation.coefficients[params_.extrapolation.order - 1 - j] * initial_[j] * ode_params_.dt;
     }
 
     // Corrector step
-    x_ = interpolation_params_.root_finder->solve(solved_func_, x);
+    x_ = params_.interpolation.root_finder->solve(solved_func_, x);
 
     t_ += ode_params_.dt;
 
-    if (!interpolation_params_.root_finder->precision_was_reached()) {
-        std::cerr << "Residual is bugger than expected: " << interpolation_params_.root_finder->get_residual()
+    if (!params_.interpolation.root_finder->precision_was_reached()) {
+        std::cerr << "Residual is bugger than expected: " << params_.interpolation.root_finder->get_residual()
                   << std::endl;
     }
 

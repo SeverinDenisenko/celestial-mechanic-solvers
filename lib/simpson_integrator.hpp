@@ -11,7 +11,7 @@ struct simpson_integrator_params_t {
 
 class simpson_integrator : public iintegrator {
 public:
-    simpson_integrator(simpson_integrator_params_t params);
+    explicit simpson_integrator(simpson_integrator_params_t params);
     real_t integrate(function_t& func, real_t a, real_t b) noexcept override;
 
 private:

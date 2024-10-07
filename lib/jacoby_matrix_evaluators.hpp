@@ -10,7 +10,7 @@ struct jacoby_mattrix_evaluator_params_t {
 
 class second_order_jacoby_mattrix_evaluator : public ijacoby_matrix_evaluator {
 public:
-    second_order_jacoby_mattrix_evaluator(jacoby_mattrix_evaluator_params_t params);
+    explicit second_order_jacoby_mattrix_evaluator(jacoby_mattrix_evaluator_params_t params);
     matrix_t evaluate(multi_function_t func, vector_t point) override;
 
 private:
@@ -19,7 +19,7 @@ private:
 
 class fourth_order_jacoby_mattrix_evaluator : public ijacoby_matrix_evaluator {
 public:
-    fourth_order_jacoby_mattrix_evaluator(jacoby_mattrix_evaluator_params_t params);
+    explicit fourth_order_jacoby_mattrix_evaluator(jacoby_mattrix_evaluator_params_t params);
     matrix_t evaluate(multi_function_t func, vector_t point) override;
 
 private:

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "integrator_interface.hpp"
+#include "root_finder_interface.hpp"
 #include "solver_interface.hpp"
 #include "types.hpp"
-#include "root_finder_interface.hpp"
 
 namespace odes {
 
@@ -14,7 +14,7 @@ struct adams_interpolation_coefficients_params_t {
 
 class adams_interpolation_coefficients {
 public:
-    adams_interpolation_coefficients(adams_interpolation_coefficients_params_t params);
+    explicit adams_interpolation_coefficients(adams_interpolation_coefficients_params_t params);
     const real_t& operator[](integer_t num) const;
 
 private:
@@ -32,8 +32,7 @@ struct adams_interpolation_solver_params_t {
 
 class adams_interpolation_solver : public isolver {
 public:
-    adams_interpolation_solver(
-        ode_params_t ode_params, adams_interpolation_solver_params_t params);
+    adams_interpolation_solver(ode_params_t ode_params, adams_interpolation_solver_params_t params);
 
     void step() noexcept override;
     const vector_t& current() const noexcept override final;

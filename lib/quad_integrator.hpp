@@ -11,12 +11,12 @@ struct quad_integrator_params_t {
 
 class quad_integrator : public iintegrator {
 public:
-    quad_integrator(quad_integrator_params_t quad_integrator_params);
+    explicit quad_integrator(quad_integrator_params_t quad_integrator_params);
 
     real_t integrate(function_t& func, real_t a, real_t b) noexcept override;
 
 private:
-	quad_integrator_params_t quad_integrator_params_;
+    quad_integrator_params_t quad_integrator_params_;
 };
 
 }
