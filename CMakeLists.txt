@@ -18,6 +18,7 @@ set(ODE_SOLVER_LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_extrapolation_solve
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/rk4_solver.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/quad_integrator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/simpson_integrator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/boole_integrator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/utils.cpp)
 
 add_compile_definitions("-DSNUMLIB_USE_MPFR=1")
