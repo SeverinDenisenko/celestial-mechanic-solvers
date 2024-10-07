@@ -52,9 +52,9 @@ adams_interpolation_solver::adams_interpolation_solver(
     solved_func_ = [this](vector_t y) -> vector_t {
         vector_t res;
 
-        res = params_.coefficients[params_.order] * ode_params_.ode(t_, y) * ode_params_.dt;
+        res = params_.coefficients[0] * ode_params_.ode(t_, y) * ode_params_.dt;
         for (integer_t j = 0; j < params_.order; ++j) {
-            res += params_.coefficients[params_.order - 1 - j] * initial_[j] * ode_params_.dt;
+            res += params_.coefficients[j + 1] * initial_[params_.order - 1 - j] * ode_params_.dt;
         }
 
         res += x_ - y;
@@ -82,7 +82,7 @@ void adams_interpolation_solver::step() noexcept
     t_ += ode_params_.dt;
 
     if(!params_.root_finder->precision_was_reached()) {
-        std::cerr << params_.root_finder->get_residual() << std::endl;
+        std::cerr << "Residual is bugger than expected: " << params_.root_finder->get_residual() << std::endl;
     }
 
     std::shift_left(initial_.begin(), initial_.end(), 1);
