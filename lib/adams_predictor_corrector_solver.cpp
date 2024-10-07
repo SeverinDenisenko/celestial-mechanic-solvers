@@ -1,6 +1,7 @@
 #include "adams_predictor_corrector_solver.hpp"
 
 #include "rk4_solver.hpp"
+#include "types.hpp"
 
 namespace odes {
 
@@ -46,12 +47,13 @@ void adams_predictor_corrector_solver::compute_initial_values()
 void adams_predictor_corrector_solver::step() noexcept
 {
     // Predictor step
+    vector_t x = x_;
     for (size_t j = 0; j < extrapolation_params_.order; ++j) {
-        x_ += extrapolation_params_.coefficients[extrapolation_params_.order - 1 - j] * initial_[j] * ode_params_.dt;
+        x += extrapolation_params_.coefficients[extrapolation_params_.order - 1 - j] * initial_[j] * ode_params_.dt;
     }
 
     // Corrector step
-    x_ = interpolation_params_.root_finder->solve(solved_func_, x_);
+    x_ = interpolation_params_.root_finder->solve(solved_func_, x);
 
     t_ += ode_params_.dt;
 
