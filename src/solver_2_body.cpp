@@ -2,18 +2,15 @@
 #include "adams_interpolation_solver.hpp"
 #include "adams_predictor_corrector_solver.hpp"
 #include "full_pivot_gauss_solver.hpp"
-#include "integrator_interface.hpp"
 #include "jacoby_matrix_evaluator_interface.hpp"
 #include "jacoby_matrix_evaluators.hpp"
-#include "matrix_solver_interface.hpp"
 #include "newton_root_finder.hpp"
-#include "rk4_solver.hpp"
+
 #include "root_finder_interface.hpp"
 #include "simpson_integrator.hpp"
 #include "solver_interface.hpp"
 #include "types.hpp"
 
-#include <cmath>
 #include <memory>
 
 odes::real_t calc_orbital_period(odes::real_t r, odes::real_t v)
@@ -61,10 +58,10 @@ int main()
 
     odes::newton_root_finder_params_t newton_root_finder_params { .max_interations = 100,
                                                                   .precision       = 1e-15,
-                                                                  .matrix_solver
-                                                                  = std::make_unique<odes::full_pivot_gauss_solver>(),
                                                                   .jacoby_matrix_evaluator
-                                                                  = std::move(matrix_evaluator) };
+                                                                  = std::move(matrix_evaluator),
+                                                                  .matrix_solver
+                                                                  = std::make_unique<odes::full_pivot_gauss_solver>() };
     odes::uptr<odes::iroot_finder> root_finder
         = std::make_unique<odes::newton_root_finder>(std::move(newton_root_finder_params));
 
