@@ -11,6 +11,7 @@ struct adams_predictor_corrector_solver_params_t {
     adams_interpolation_coefficients interpolation_coefficients;
     adams_extrapolation_coefficients extrapolation_coefficients;
     uptr<iroot_finder> root_finder;
+    uptr<isolver> initial_solver;
 };
 
 class adams_predictor_corrector_solver : public isolver {

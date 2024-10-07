@@ -28,6 +28,7 @@ struct adams_interpolation_solver_params_t {
     integer_t order;
     adams_interpolation_coefficients coefficients;
     uptr<iroot_finder> root_finder;
+    uptr<isolver> initial_solver;
 };
 
 class adams_interpolation_solver : public isolver {

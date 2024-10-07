@@ -65,15 +65,13 @@ adams_interpolation_solver::adams_interpolation_solver(
 
 void adams_interpolation_solver::compute_initial_values()
 {
-    rk4_solver_params_t rk4_solver_params {};
-    rk4_solver solver(ode_params_, rk4_solver_params);
     for (size_t i = 0; i < params_.order; ++i) {
-        solver.step();
-        initial_.push_back(ode_params_.ode(solver.current_time(), solver.current()));
+        params_.initial_solver->step();
+        initial_.push_back(ode_params_.ode(params_.initial_solver->current_time(), params_.initial_solver->current()));
     }
 
-    x_ = solver.current();
-    t_ = solver.current_time();
+    x_ = params_.initial_solver->current();
+    t_ = params_.initial_solver->current_time();
 }
 
 void adams_interpolation_solver::step() noexcept
@@ -81,7 +79,7 @@ void adams_interpolation_solver::step() noexcept
     x_ = params_.root_finder->solve(solved_func_, x_);
     t_ += ode_params_.dt;
 
-    if(!params_.root_finder->precision_was_reached()) {
+    if (!params_.root_finder->precision_was_reached()) {
         std::cerr << "Residual is bugger than expected: " << params_.root_finder->get_residual() << std::endl;
     }
 

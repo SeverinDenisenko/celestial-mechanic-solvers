@@ -42,8 +42,3 @@ target_link_libraries(matrix_solver_test ODESolversLib)
 add_executable(root_finder_test ${CMAKE_CURRENT_SOURCE_DIR}/tests/root_finder_test.cpp)
 target_compile_options(root_finder_test PRIVATE -Wall -Wextra -O3)
 target_link_libraries(root_finder_test ODESolversLib)
-
-set(SOLVER_N_BODY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/solver_n_body.cpp)
-add_executable(SolverNBody ${SOLVER_N_BODY_SRC})
-target_compile_options(SolverNBody PRIVATE -Wall -Wextra  -O3)
-target_link_libraries(SolverNBody ODESolversLib)

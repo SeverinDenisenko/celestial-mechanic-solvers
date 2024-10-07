@@ -12,6 +12,7 @@ struct adams_iterative_predictor_corrector_solver_params_t {
     integer_t iterations;
     adams_interpolation_coefficients interpolation_coefficients;
     adams_extrapolation_coefficients extrapolation_coefficients;
+    uptr<isolver> initial_solver;
 };
 
 class adams_iterative_predictor_corrector_solver : public isolver {

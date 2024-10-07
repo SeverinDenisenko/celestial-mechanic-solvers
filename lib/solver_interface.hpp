@@ -31,21 +31,4 @@ public:
     virtual ~isolver()                                  = default;
 };
 
-inline void solve(std::unique_ptr<isolver> solver, array_t<string_t> names, odes::integer_t print_every_n = 1)
-{
-    std::cout << names << std::endl;
-    std::cout << std::setw(12) << std::fixed << std::setprecision(9) << solver->current_time() << solver->current()
-              << std::endl;
-    odes::integer_t counter = 0;
-    while (solver->current_time() < solver->end_time()) {
-        solver->step();
-        if (++counter % print_every_n == 0) {
-            std::cout << std::setw(12) << std::fixed << std::setprecision(14) << solver->current_time()
-                      << solver->current() << std::endl;
-        }
-    }
-    std::cout << std::setw(12) << std::fixed << std::setprecision(14) << solver->current_time()
-              << solver->current() << std::endl;
-}
-
 } // namespace odes

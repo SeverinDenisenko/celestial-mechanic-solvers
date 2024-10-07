@@ -26,6 +26,7 @@ private:
 struct adams_extrapolation_solver_params_t {
     integer_t order;
     adams_extrapolation_coefficients coefficients;
+    uptr<isolver> initial_solver;
 };
 
 class adams_extrapolation_solver : public isolver {
