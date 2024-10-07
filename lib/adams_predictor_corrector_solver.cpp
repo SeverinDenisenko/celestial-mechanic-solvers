@@ -16,10 +16,9 @@ adams_predictor_corrector_solver::adams_predictor_corrector_solver(
     solved_func_ = [this](vector_t y) -> vector_t {
         vector_t res;
 
-        res = params_.interpolation.coefficients[0] * ode_params_.ode(t_, y) * ode_params_.dt;
-        for (integer_t j = 0; j < params_.interpolation.order; ++j) {
-            res += params_.interpolation.coefficients[j + 1] * initial_[params_.interpolation.order - 1 - j]
-                * ode_params_.dt;
+        res = params_.interpolation_coefficients[0] * ode_params_.ode(t_, y) * ode_params_.dt;
+        for (integer_t j = 0; j < params_.order; ++j) {
+            res += params_.interpolation_coefficients[j + 1] * initial_[params_.order - 1 - j] * ode_params_.dt;
         }
 
         res += x_ - y;
@@ -32,7 +31,7 @@ void adams_predictor_corrector_solver::compute_initial_values()
 {
     rk4_solver_params_t rk4_solver_params {};
     rk4_solver solver(ode_params_, rk4_solver_params);
-    for (size_t i = 0; i < params_.extrapolation.order; ++i) {
+    for (size_t i = 0; i < params_.order; ++i) {
         solver.step();
         initial_.push_back(ode_params_.ode(solver.current_time(), solver.current()));
     }
@@ -45,18 +44,17 @@ void adams_predictor_corrector_solver::step() noexcept
 {
     // Predictor step
     vector_t x = x_;
-    for (size_t j = 0; j < params_.extrapolation.order; ++j) {
-        x += params_.extrapolation.coefficients[params_.extrapolation.order - 1 - j] * initial_[j] * ode_params_.dt;
+    for (size_t j = 0; j < params_.order; ++j) {
+        x += params_.extrapolation_coefficients[params_.order - 1 - j] * initial_[j] * ode_params_.dt;
     }
 
     // Corrector step
-    x_ = params_.interpolation.root_finder->solve(solved_func_, x);
+    x_ = params_.root_finder->solve(solved_func_, x);
 
     t_ += ode_params_.dt;
 
-    if (!params_.interpolation.root_finder->precision_was_reached()) {
-        std::cerr << "Residual is bugger than expected: " << params_.interpolation.root_finder->get_residual()
-                  << std::endl;
+    if (!params_.root_finder->precision_was_reached()) {
+        std::cerr << "Residual is bugger than expected: " << params_.root_finder->get_residual() << std::endl;
     }
 
     std::shift_left(initial_.begin(), initial_.end(), 1);

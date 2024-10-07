@@ -12,6 +12,7 @@ find_package(MPFR REQUIRED)
 set(ODE_SOLVER_LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_extrapolation_solver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_interpolation_solver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_predictor_corrector_solver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_iterative_predictor_corrector_solver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/jacoby_matrix_evaluators.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/full_pivot_gauss_solver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/newton_root_finder.cpp
