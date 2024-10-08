@@ -54,7 +54,7 @@
     \end{itemize}
 \end{frame}
 
-\section{Interpolatin Adams method}
+\section{Interpolation Adams method}
 
 \begin{frame}{Second order}
   \begin{figure}
@@ -92,6 +92,187 @@
       0.001 & 1.00001246611392\\
       0.0001 & 1.00000001277170\\
       0.00001 & 1.00000000000627\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\section{Predictor as initial guess for Newton method}
+
+\begin{frame}{Second order}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=\textwidth,
+        height=7cm,
+        legend style={at={(0.8,0.8)},anchor=west},
+        xmin=-0.5, xmax=1.5,
+        ymin=-0.7, ymax=0.7,
+        ]
+
+        \addplot table [y=y, x=x, mark=none]{fulldt0dot01order2.dat};
+        \addlegendentry{$dt = 0.01$}
+        \addplot table [y=y, x=x, mark=none]{fulldt0dot001order2.dat};
+        \addlegendentry{$dt = 0.001$}
+        \addplot table [y=y, x=x, mark=none]{fulldt0dot0001order2.dat};
+        \addlegendentry{$dt = 0.0001$}
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Second order}
+  \begin{table}
+    \caption{Second order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 1.0128289067605251974760657\\
+      0.001 & 1.0000123866279617751145113\\
+      0.0001 & 1.0000000128654984841376535\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Third order}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=\textwidth,
+        height=7cm,
+        legend style={at={(0.8,0.8)},anchor=west},
+        xmin=-0.5, xmax=1.5,
+        ymin=-0.7, ymax=0.7,
+        ]
+
+        \addplot table [y=y, x=x, mark=none]{fulldt0dot01order3.dat};
+        \addlegendentry{$dt = 0.01$}
+        \addplot table [y=y, x=x, mark=none]{fulldt0dot001order3.dat};
+        \addlegendentry{$dt = 0.001$}
+        \addplot table [y=y, x=x, mark=none]{fulldt0dot0001order3.dat};
+        \addlegendentry{$dt = 0.0001$}
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Third order}
+  \begin{table}
+    \caption{Second order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 1.0009000321668760808307374\\
+      0.001 & 0.9999995097383831316826063\\
+      0.0001 & 1.0000000000000971940556261\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\section{Predictor as initial value for iterative process}
+
+\begin{frame}{First order}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=\textwidth,
+        height=7cm,
+        legend style={at={(0.8,0.8)},anchor=west},
+        xmin=-0.5, xmax=1.5,
+        ymin=-0.7, ymax=0.7,
+        ]
+
+        \addplot table [y=y, x=x, mark=none]{dt0dot01order1.dat};
+        \addlegendentry{$dt = 0.01$}
+        \addplot table [y=y, x=x, mark=none]{dt0dot001order1.dat};
+        \addlegendentry{$dt = 0.001$}
+        \addplot table [y=y, x=x, mark=none]{dt0dot0001order1.dat};
+        \addlegendentry{$dt = 0.0001$}
+        \addplot table [y=y, x=x, mark=none]{dt0dot00001order1.dat};
+        \addlegendentry{$dt = 0.00001$}
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{First order}
+  \begin{table}
+    \caption{First order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 0.9998399718001338786028265\\
+      0.001 & 0.9999993666110717067951749\\
+      0.0001 & 0.9999999999974467024554771\\
+      0.00001 & 0.9999999999999997425164678\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Second order}
+  \begin{table}
+    \caption{Second order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 1.0126332561465809835519186\\
+      0.001 & 1.0000123842869742414559587\\
+      0.0001 & 1.0000000128654750736181803\\
+      0.00001 & 1.0000000000128643767542211\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Third order}
+  \begin{table}
+    \caption{Third order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 1.0008510571890576191577368\\
+      0.001 & 0.9999995097322959439077395\\
+      0.0001 & 1.0000000000000971934471436\\
+      0.00001 & 1.0000000000000000009718023\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Fourth order}
+  \begin{table}
+    \caption{Fourth order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 0.9992814557218406133166121\\
+      0.001 & 0.9999994912341766587055798\\
+      0.0001 & 0.9999999999999125275850056\\
+      0.00001 & 0.9999999999999999991253780\\
       \midrule
       exact & 1.0 \\
       \bottomrule
