@@ -3,12 +3,29 @@
 
 ## What is it?
 
-This is an implementation of two popular ODE solvers: the Runge-Kutta 4th order and Adams extrapolation methods (Linear multistep method). The main program solves a simple two-body problem as an example.
+This is an implementation of some popular ODE solvers.
+* Runge-Kutta 4th order
+* Adams extrapolation method
+* Adams interpolation method
+* Predictor-corrector method in 2 variants
 
-## Motivation
+The main program solves a simple two-body problem as an example.
 
-The Adams method of n'th order has n'th order of approximation, which makes it a flexible choice for celestial mechanics applications. The Adams method itself depends on other integrators to provide initial values for a multistep procedure. For this case was chosen Runge-Kutta 4th, but this can be changed.
+Additional algorithms include:
+* Quadrature folmuas
+* * Trapezoidal rule
+* * Simpson rule
+* * Boole rule
+* Full pivot Gauss method
+* Jacobian matrix estimation
+* * Second order derivatives
+* * Fourth order derivatives
+* Newton root finder
+
+Some tests also can be used as examples.
 
 ## Details
+
+All algorithms provide modern OO-design oriented interfaces.
 
 This project uses the multiple-precision floating-point computation library MPFR (https://www.mpfr.org) and Boost uBLAS (https://github.com/boostorg/ublas). Everything is flexible enough to return to basic floating-point numbers.
