@@ -42,3 +42,7 @@ target_link_libraries(matrix_solver_test ODESolversLib)
 add_executable(root_finder_test ${CMAKE_CURRENT_SOURCE_DIR}/tests/root_finder_test.cpp)
 target_compile_options(root_finder_test PRIVATE -Wall -Wextra -O3)
 target_link_libraries(root_finder_test ODESolversLib)
+
+add_executable(newton_fractal ${CMAKE_CURRENT_SOURCE_DIR}/demos/newton_fractal.cpp)
+target_compile_options(newton_fractal PRIVATE -Wall -Wextra -O3)
+target_link_libraries(newton_fractal ODESolversLib)

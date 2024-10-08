@@ -1,13 +1,11 @@
 #pragma once
 
 #include <functional>
-#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 
@@ -47,6 +45,15 @@ inline matrix_t operator*(matrix_t m1, matrix_t m2)
 inline real_t norm(vector_t v)
 {
     return boost::numeric::ublas::norm_2(v);
+}
+
+inline std::ostream& operator<<(std::ostream& stream, const vector_t& vector)
+{
+    for (size_t i = 0; i < vector.size(); ++i) {
+        stream << " " << vector[i];
+    }
+
+    return stream;
 }
 
 template <typename T>

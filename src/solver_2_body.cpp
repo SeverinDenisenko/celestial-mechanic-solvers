@@ -11,6 +11,7 @@
 #include "solver_interface.hpp"
 #include "types.hpp"
 
+#include <iomanip>
 #include <memory>
 
 odes::real_t calc_orbital_period(odes::real_t r, odes::real_t v)
