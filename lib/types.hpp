@@ -32,6 +32,11 @@ using string_t         = std::string;
 using function_t       = std::function<real_t(real_t)>;
 using multi_function_t = std::function<vector_t(vector_t)>;
 
+inline real_t dot(vector_t m, vector_t v)
+{
+    return boost::numeric::ublas::inner_prod(m, v);
+}
+
 inline vector_t operator*(matrix_t m, vector_t v)
 {
     return boost::numeric::ublas::prod(m, v);

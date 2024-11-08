@@ -20,7 +20,9 @@ set(ODE_SOLVER_LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/adams_extrapolation_solve
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/quad_integrator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/simpson_integrator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lib/boole_integrator.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/lib/utils.cpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/utils.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/lib/hermite_solver.cpp
+	)
 
 add_compile_definitions("-DSNUMLIB_USE_MPFR=1")
 
@@ -34,6 +36,11 @@ set(SOLVER_2_BODY_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/solver_2_body.cpp)
 add_executable(Solver2Body ${SOLVER_2_BODY_SRC})
 target_compile_options(Solver2Body PRIVATE -Wall -Wextra -O3)
 target_link_libraries(Solver2Body ODESolversLib)
+
+set(HERMITE_2_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/hermite_2_body.cpp)
+add_executable(Hermite2 ${HERMITE_2_SRC})
+target_compile_options(Hermite2 PRIVATE -Wall -Wextra -O3)
+target_link_libraries(Hermite2 ODESolversLib)
 
 add_executable(matrix_solver_test ${CMAKE_CURRENT_SOURCE_DIR}/tests/matrix_solver_test.cpp)
 target_compile_options(matrix_solver_test PRIVATE -Wall -Wextra -O3)
