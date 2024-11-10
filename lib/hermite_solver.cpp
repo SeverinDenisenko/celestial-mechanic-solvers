@@ -40,8 +40,10 @@ void hermite_solver::step() noexcept
 {
     real_t dt = params_.dt;
 
-    real_t dt2 = pow(dt, 2);
-    real_t dt3 = pow(dt, 3);
+    real_t dt2 = dt * dt;
+    real_t dt3 = dt2 * dt2;
+    real_t dt4 = dt3 * dt;
+    real_t dt5 = dt4 * dt;
 
     for (integer_t i = 0; i < bodies_.size(); ++i) {
         bodies_next_[i].r = bodies_[i].r + bodies_[i].v * dt + real_t(1) / real_t(2) * bodies_[i].a * dt2
@@ -52,11 +54,10 @@ void hermite_solver::step() noexcept
     calculate_a_and_j(bodies_next_);
 
     for (integer_t i = 0; i < bodies_.size(); ++i) {
-        bodies_[i].r = bodies_[i].r + real_t(1) / real_t(2) * (bodies_[i].v + bodies_next_[i].v) * dt
-            - real_t(1) / real_t(10) * (bodies_next_[i].a - bodies_[i].a) * dt2
-            + real_t(1) / real_t(120) * (bodies_[i].j + bodies_next_[i].j) * dt3;
-        bodies_[i].v = bodies_[i].v + real_t(1) / real_t(2) * (bodies_[i].a + bodies_next_[i].a) * dt
-            - real_t(1) / real_t(12) * (bodies_next_[i].j - bodies_[i].j) * dt2;
+        vector_t a2 = (-6 * (bodies_[i].a - bodies_next_[i].a) - dt * (4 * bodies_[i].j + 2 * bodies_next_[i].j)) / dt2;
+        vector_t a3 = (12 * (bodies_[i].a - bodies_next_[i].a) + 6 * dt * (bodies_[i].j + bodies_next_[i].j)) / dt3;
+        bodies_[i].r = bodies_next_[i].r + dt4 * a2 / 24 + dt5 * a3 / 120;
+        bodies_[i].v = bodies_next_[i].v + dt3 * a2 / 6 + dt4 * a3 / 24;
     }
 
     calculate_a_and_j(bodies_);

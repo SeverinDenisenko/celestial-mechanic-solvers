@@ -1,0 +1,100 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usecolortheme{aggie}
+
+\usepackage{appendixnumberbeamer}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\title{Hermite integrator for N-body problems}
+\subtitle{Using Hermite solver for 2- and 3- body problems}
+\date{\today}
+\author{Severin Denisenko}
+\institute{Saint Petersburg State University}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents%[hideallsubsections]
+\end{frame}
+
+\section[Concept]{Concept}
+
+\begin{frame}{Concept}
+    Predictor-corrector integrator with sceme:
+\end{frame}
+
+\section{Numerical results}
+
+\begin{frame}{Numerical results}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=\textwidth,
+        height=7cm,
+        legend style={at={(0.8,0.8)},anchor=west},
+        xmin=-0.5, xmax=1.5,
+        ymin=-0.7, ymax=0.7,
+        ]
+
+        \addplot table [y=y, x=x, mark=none]{dt0dot01.dat};
+        \addlegendentry{$dt = 0.01$}
+        \addplot table [y=y, x=x, mark=none]{dt0dot001.dat};
+        \addlegendentry{$dt = 0.001$}
+        \addplot table [y=y, x=x, mark=none]{dt0dot0001.dat};
+        \addlegendentry{$dt = 0.0001$}
+        \addplot table [y=y, x=x, mark=none]{dt0dot00001.dat};
+        \addlegendentry{$dt = 0.00001$}
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Second order}
+  \begin{table}
+    \caption{Second order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & x on t=T\\
+      \midrule
+      0.01 & 0.9999039650548958695622039\\
+      0.001 & 0.9999994995858415903967251\\
+      0.0001 & 0.9999999999999962284827070\\
+      0.00001 & 0.9999999999999999999622911\\
+      \midrule
+      exact & 1.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Second order}
+  \begin{table}
+    \caption{Second order method precision}
+    \begin{tabular}{lr}
+      \toprule
+      dt & v on t=T\\
+      \midrule
+      0.01 & 0.4999958427950561553333393\\
+      0.001 & 0.4999997501670791203050699\\
+      0.0001 & 0.5000000000000019454031067\\
+      0.00001 & 0.5000000000000000000194509\\
+      \midrule
+      exact & 0.5 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\end{document}

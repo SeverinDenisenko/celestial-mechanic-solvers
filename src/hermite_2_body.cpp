@@ -12,7 +12,8 @@ odes::real_t calc_orbital_period(odes::real_t r, odes::real_t v)
     return t;
 };
 
-inline void solve(std::unique_ptr<odes::inbody_solver> solver, odes::array_t<odes::string_t> names)
+inline void
+solve(std::unique_ptr<odes::inbody_solver> solver, odes::array_t<odes::string_t> names, odes::integer_t print_n)
 {
     using namespace odes;
 
@@ -24,12 +25,16 @@ inline void solve(std::unique_ptr<odes::inbody_solver> solver, odes::array_t<ode
               << solver->current_time() << solver->current()[1].r - solver->current()[0].r
               << solver->current()[1].v - solver->current()[0].v << std::endl;
 
+    odes::integer_t i = 0;
     while (solver->current_time() < solver->end_time()) {
-        std::cout << std::setw(precision + addiaional) << std::fixed << std::setprecision(precision)
-                  << solver->current_time() << solver->current()[1].r - solver->current()[0].r
-                  << solver->current()[1].v - solver->current()[0].v << std::endl;
-
         solver->step();
+        ++i;
+
+        if (i % print_n == 0) {
+            std::cout << std::setw(precision + addiaional) << std::fixed << std::setprecision(precision)
+                      << solver->current_time() << solver->current()[1].r - solver->current()[0].r
+                      << solver->current()[1].v - solver->current()[0].v << std::endl;
+        }
     }
 
     std::cout << std::setw(precision + addiaional) << std::fixed << std::setprecision(precision)
@@ -39,6 +44,7 @@ inline void solve(std::unique_ptr<odes::inbody_solver> solver, odes::array_t<ode
 
 int main()
 {
+    using odes::integer_t;
     using odes::real_t;
     using odes::vector_t;
 
@@ -54,10 +60,12 @@ int main()
     bodies[1].r = odes::make_vector<real_t>({ 1.0, 0.0, 0.0 });
     bodies[1].v = odes::make_vector<real_t>({ 0.0, 0.5, 0.0 });
 
-    real_t r  = 1.0;
-    real_t v  = 0.5;
-    real_t t  = calc_orbital_period(r, v);
-    real_t dt = 0.0001;
+    real_t r          = 1.0;
+    real_t v          = 0.5;
+    real_t t          = calc_orbital_period(r, v);
+    real_t dt         = 0.001;
+    real_t dt_norm    = t / static_cast<integer_t>(t / dt);
+    integer_t print_n = static_cast<integer_t>(t / dt) / 100;
 
     odes::interaction_function_t a = [](vector_t r, vector_t v, real_t m) -> vector_t {
         real_t r3 = pow(odes::norm(r), 3);
@@ -70,11 +78,11 @@ int main()
         return -m * (v / r3 - 3 * odes::dot(r, v) * r / r5);
     };
 
-    odes::nbody_params_t params { .t0 = 0.0, .t1 = t, .dt = dt, .m = m, .state = bodies, .a = a, .j = j };
+    odes::nbody_params_t params { .t0 = 0.0, .t1 = t, .dt = dt_norm, .m = m, .state = bodies, .a = a, .j = j };
 
     std::unique_ptr<odes::inbody_solver> solver = std::make_unique<odes::hermite_solver>(params);
 
-    solve(std::move(solver), odes::array_t<odes::string_t> { "t", "x", "y", "z", "vx", "vy", "vz" });
+    solve(std::move(solver), odes::array_t<odes::string_t> { "t", "x", "y", "z", "vx", "vy", "vz" }, print_n);
 
     return 0;
 }
