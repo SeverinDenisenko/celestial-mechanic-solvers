@@ -2,7 +2,6 @@
 #include "nbody_solver_interface.hpp"
 #include "types.hpp"
 
-#include <complex>
 #include <iomanip>
 #include <memory>
 
@@ -71,7 +70,7 @@ int main()
         return -m * (v / r3 - 3 * odes::dot(r, v) * r / r5);
     };
 
-    odes::nbody_params_t params { .t0 = 0.0, .t1 = t, .dt = dt, .state = bodies, .m = m, .a = a, .j = j };
+    odes::nbody_params_t params { .t0 = 0.0, .t1 = t, .dt = dt, .m = m, .state = bodies, .a = a, .j = j };
 
     std::unique_ptr<odes::inbody_solver> solver = std::make_unique<odes::hermite_solver>(params);
 
