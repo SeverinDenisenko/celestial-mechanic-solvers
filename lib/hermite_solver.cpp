@@ -41,7 +41,7 @@ void hermite_solver::step() noexcept
     real_t dt = params_.dt;
 
     real_t dt2 = dt * dt;
-    real_t dt3 = dt2 * dt2;
+    real_t dt3 = dt2 * dt;
     real_t dt4 = dt3 * dt;
     real_t dt5 = dt4 * dt;
 

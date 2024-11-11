@@ -63,9 +63,9 @@ int main()
     real_t r          = 1.0;
     real_t v          = 0.5;
     real_t t          = calc_orbital_period(r, v);
-    real_t dt         = 0.001;
+    real_t dt         = 0.00003;
     real_t dt_norm    = t / static_cast<integer_t>(t / dt);
-    integer_t print_n = static_cast<integer_t>(t / dt) / 100;
+    integer_t print_n = static_cast<integer_t>(t / dt_norm) / 100;
 
     odes::interaction_function_t a = [](vector_t r, vector_t v, real_t m) -> vector_t {
         real_t r3 = pow(odes::norm(r), 3);
