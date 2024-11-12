@@ -42,6 +42,11 @@ add_executable(Hermite2 ${HERMITE_2_SRC})
 target_compile_options(Hermite2 PRIVATE -Wall -Wextra -O3)
 target_link_libraries(Hermite2 ODESolversLib)
 
+set(HERMITE_4_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/hermite_4_body.cpp)
+add_executable(Hermite4 ${HERMITE_4_SRC})
+target_compile_options(Hermite4 PRIVATE -Wall -Wextra -O3)
+target_link_libraries(Hermite4 ODESolversLib)
+
 add_executable(matrix_solver_test ${CMAKE_CURRENT_SOURCE_DIR}/tests/matrix_solver_test.cpp)
 target_compile_options(matrix_solver_test PRIVATE -Wall -Wextra -O3)
 target_link_libraries(matrix_solver_test ODESolversLib)

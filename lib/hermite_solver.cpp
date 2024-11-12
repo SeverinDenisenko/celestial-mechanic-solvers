@@ -10,7 +10,6 @@ hermite_solver::hermite_solver(nbody_params_t params)
     , bodies_next_(bodies_)
     , t_(params_.t0)
 {
-    calculate_a_and_j(bodies_);
 }
 
 void hermite_solver::calculate_a_and_j(nbody_t& target)
@@ -45,10 +44,11 @@ void hermite_solver::step() noexcept
     real_t dt4 = dt3 * dt;
     real_t dt5 = dt4 * dt;
 
+    calculate_a_and_j(bodies_);
+
     for (integer_t i = 0; i < bodies_.size(); ++i) {
-        bodies_next_[i].r = bodies_[i].r + bodies_[i].v * dt + real_t(1) / real_t(2) * bodies_[i].a * dt2
-            + real_t(1) / real_t(6) * bodies_[i].j * dt3;
-        bodies_next_[i].v = bodies_[i].v + bodies_[i].a * dt + real_t(1) / real_t(2) * bodies_[i].j * dt2;
+        bodies_next_[i].r = bodies_[i].r + bodies_[i].v * dt + bodies_[i].a * dt2 / 2 + bodies_[i].j * dt3 / 6;
+        bodies_next_[i].v = bodies_[i].v + bodies_[i].a * dt + bodies_[i].j * dt2 / 2;
     }
 
     calculate_a_and_j(bodies_next_);
@@ -59,8 +59,6 @@ void hermite_solver::step() noexcept
         bodies_[i].r = bodies_next_[i].r + dt4 * a2 / 24 + dt5 * a3 / 120;
         bodies_[i].v = bodies_next_[i].v + dt3 * a2 / 6 + dt4 * a3 / 24;
     }
-
-    calculate_a_and_j(bodies_);
 
     t_ += dt;
 }

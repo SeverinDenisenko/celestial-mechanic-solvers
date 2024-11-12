@@ -4,3 +4,6 @@
 *.snm
 *.toc
 *.vrb
+*.fdb_latexmk
+*.fls
+*.gz

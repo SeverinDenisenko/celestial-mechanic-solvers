@@ -32,6 +32,26 @@
 
 \begin{frame}{Concept}
     Predictor-corrector integrator with sceme:
+    \begin{equation*}
+        r' = r + v \cdot dt + a dt^2 + j \cdot dt^3 / 6
+    \end{equation*}
+    \begin{equation*}
+        v' = v + a \cdot dt + j \cdot dt^2 /2
+    \end{equation*}
+
+    \begin{equation*}
+        a2 = (-6 * (a - a') - dt (4 j + 2 j')) / dt^2
+    \end{equation*}
+    \begin{equation*}
+        a3 = (12 * (a - a') + 6 dt (j + j')) / dt^3
+    \end{equation*}
+
+    \begin{equation*}
+        r'' = r' + dt^4 a2 / 24 + dt^5 a3 / 120
+    \end{equation*}
+    \begin{equation*}
+        v'' = v' + dt^3 a2 / 6 + dt^4 a3 / 24
+    \end{equation*}
 \end{frame}
 
 \section{Numerical results}
@@ -75,6 +95,8 @@
       0.0001 &   0.9999999999999962284827070\\
       0.00003 &  0.9999999995499963625275751\\
       0.00001 &  0.9999999999999999999622911\\
+      0.000003 & 0.9999999999999999999999084\\
+      0.000001 & 0.9999999999999999999999996\\
       \midrule
       exact & 1.0 \\
       \bottomrule
@@ -96,11 +118,33 @@
       0.0001 &   0.5000000000000019454031067\\
       0.00003 &  0.4999999997749981902652783\\
       0.00001 &  0.5000000000000000000194509\\
+      0.000003 & 0.5000000000000000000000473\\
+      0.000001 & 0.5000000000000000000000002\\
       \midrule
       exact & 0.5 \\
       \bottomrule
     \end{tabular}
   \end{table}
+\end{frame}
+
+\begin{frame}{4 body}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=\textwidth,
+        height=7cm,
+        xmin=-2, xmax=2,
+        ymin=-1, ymax=1,
+        ]
+
+        \addplot table [y=y0, x=x0, mark=none]{4body.dat};
+        \addplot table [y=y1, x=x1, mark=none]{4body.dat};
+        \addplot table [y=y2, x=x2, mark=none]{4body.dat};
+        \addplot table [y=y3, x=x3, mark=none]{4body.dat};
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
 \end{frame}
 
 \end{document}
